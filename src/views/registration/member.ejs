@@ -1,0 +1,151 @@
+<%- include('../layouts/main', { title: 'Member Registration' }) %>
+
+<div class="max-w-3xl mx-auto">
+  <h1 class="text-3xl font-bold mb-8">Become a Member</h1>
+
+  <form action="/register/member" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Personal Information -->
+      <div class="col-span-2">
+        <h2 class="text-xl font-semibold mb-4">Personal Information</h2>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="fullName">
+          Full Name
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="fullName"
+               name="fullName"
+               type="text"
+               required>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+          Email
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="email"
+               name="email"
+               type="email"
+               required>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="age">
+          Age
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="age"
+               name="age"
+               type="number"
+               min="16"
+               required>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
+          Phone Number
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="phone"
+               name="phone"
+               type="tel"
+               required>
+      </div>
+
+      <!-- Campus Selection -->
+      <div class="col-span-2">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Preferred Campus
+        </label>
+        <div class="flex space-x-4">
+          <label class="inline-flex items-center">
+            <input type="radio" name="campus" value="4kilo" required class="form-radio">
+            <span class="ml-2">4 Kilo Campus</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="campus" value="6kilo" required class="form-radio">
+            <span class="ml-2">6 Kilo Campus</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Student Status -->
+      <div class="col-span-2">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Are you an AAU Student?
+        </label>
+        <div class="flex space-x-4">
+          <label class="inline-flex items-center">
+            <input type="radio" name="isStudent" value="true" class="form-radio" onchange="toggleStudentIdUpload(true)">
+            <span class="ml-2">Yes</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="isStudent" value="false" class="form-radio" onchange="toggleStudentIdUpload(false)">
+            <span class="ml-2">No</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Student ID Upload -->
+      <div id="studentIdUpload" class="col-span-2 hidden">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Upload Student ID
+        </label>
+        <input type="file" name="studentId" accept="image/*" class="w-full">
+        <p class="text-sm text-gray-500 mt-1">Upload a clear photo of your AAU student ID</p>
+      </div>
+
+      <!-- Package Selection -->
+      <div class="col-span-2">
+        <h2 class="text-xl font-semibold mb-4">Select Package</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <% packages.forEach(package => { %>
+            <label class="border rounded-lg p-4 cursor-pointer hover:border-blue-500">
+              <input type="radio" name="selectedPackage" value="<%= package._id %>" required>
+              <span class="ml-2 font-semibold"><%= package.name %></span>
+              <p class="text-gray-600 text-sm mt-1"><%= package.description %></p>
+              <p class="text-blue-600 font-bold mt-2">ETB <%= package.price %></p>
+            </label>
+          <% }); %>
+        </div>
+      </div>
+
+      <!-- Payment Proof -->
+      <div class="col-span-2">
+        <h2 class="text-xl font-semibold mb-4">Payment Information</h2>
+        <div class="mb-4">
+          <p class="text-gray-700 mb-2">Please transfer the payment to one of our bank accounts:</p>
+          <ul class="list-disc list-inside mb-4 text-gray-600">
+            <li>Commercial Bank of Ethiopia: 1000123456789</li>
+            <li>Dashen Bank: 4567890123456</li>
+            <li>Awash Bank: 7890123456789</li>
+          </ul>
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Upload Payment Proof
+          </label>
+          <input type="file" name="paymentProof" accept="image/*" required class="w-full">
+          <p class="text-sm text-gray-500 mt-1">Upload a screenshot or photo of your payment receipt</p>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="col-span-2">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+          Submit Registration
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+function toggleStudentIdUpload(show) {
+  const uploadDiv = document.getElementById('studentIdUpload');
+  uploadDiv.style.display = show ? 'block' : 'none';
+  const input = uploadDiv.querySelector('input');
+  input.required = show;
+}
+</script>

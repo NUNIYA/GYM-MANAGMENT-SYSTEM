@@ -1,0 +1,67 @@
+<%- include('../layouts/main', { title: 'Admin Dashboard' }) %>
+
+<div class="container mx-auto px-4">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Admin Dashboard - <%= user.campus === '4kilo' ? '4 Kilo' : '6 Kilo' %> Campus</h1>
+    <div class="text-gray-600">
+      Welcome, Admin
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Pending Registrations -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold mb-4">Pending Registrations</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-gray-600">Members</p>
+          <p class="text-2xl font-bold text-blue-600"><%= stats.pendingMembers %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Trainers</p>
+          <p class="text-2xl font-bold text-blue-600"><%= stats.pendingTrainers %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Users -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold mb-4">Active Users</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-gray-600">Members</p>
+          <p class="text-2xl font-bold text-green-600"><%= stats.activeMembers %></p>
+        </div>
+        <div>
+          <p class="text-gray-600">Trainers</p>
+          <p class="text-2xl font-bold text-green-600"><%= stats.activeTrainers %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Complaints -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold mb-4">Pending Complaints</h3>
+      <p class="text-2xl font-bold text-red-600"><%= stats.pendingComplaints %></p>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <a href="/admin/members" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+      <h3 class="text-lg font-semibold mb-2">Manage Members</h3>
+      <p class="text-gray-600">Review and manage member registrations</p>
+    </a>
+    
+    <a href="/admin/trainers" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+      <h3 class="text-lg font-semibold mb-2">Manage Trainers</h3>
+      <p class="text-gray-600">Review trainer applications and manage staff</p>
+    </a>
+    
+    <a href="/admin/complaints" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+      <h3 class="text-lg font-semibold mb-2">Handle Complaints</h3>
+      <p class="text-gray-600">Review and resolve member complaints</p>
+    </a>
+  </div>
+</div>

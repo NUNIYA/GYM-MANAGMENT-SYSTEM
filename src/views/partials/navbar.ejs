@@ -1,0 +1,32 @@
+<nav class="bg-blue-600 text-white shadow-lg">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <div class="flex items-center">
+                <a href="/" class="text-xl font-bold">AAU GYM</a>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="/" class="hover:text-blue-200">Home</a>
+                <a href="/about" class="hover:text-blue-200">About Us</a>
+                <a href="/packages" class="hover:text-blue-200">Packages</a>
+                <div class="relative group">
+                    <button class="hover:text-blue-200">Join Us</button>
+                    <div class="absolute hidden group-hover:block w-48 bg-white text-gray-700 shadow-lg rounded-lg mt-2">
+                        <a href="/register/member" class="block px-4 py-2 hover:bg-gray-100">Become a Member</a>
+                        <a href="/register/trainer" class="block px-4 py-2 hover:bg-gray-100">Apply as Trainer</a>
+                    </div>
+                </div>
+                <a href="/contact" class="hover:text-blue-200">Contact</a>
+                <a href="/faq" class="hover:text-blue-200">FAQ</a>
+            </div>
+
+            <div>
+                <% if (locals.user) { %>
+                    <a href="/auth/logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</a>
+                <% } else { %>
+                    <a href="/auth/login" class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-50">Login</a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</nav>

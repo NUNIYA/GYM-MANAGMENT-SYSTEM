@@ -1,0 +1,63 @@
+<%- include('../layouts/main', { title: 'Trainer Management' }) %>
+
+<div class="container mx-auto px-4">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Trainer Management</h1>
+    <a href="/admin/dashboard" class="text-blue-600 hover:text-blue-800">Back to Dashboard</a>
+  </div>
+
+  <!-- Trainer List -->
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trainer</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Documents</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% trainers.forEach(trainer => { %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm font-medium text-gray-900"><%= trainer.fullName %></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900"><%= trainer.email %></div>
+                <div class="text-sm text-gray-500"><%= trainer.phone %></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                  <%= trainer.status === 'approved' ? 'bg-green-100 text-green-800' : 
+                     trainer.status === 'rejected' ? 'bg-red-100 text-red-800' : 
+                     'bg-yellow-100 text-yellow-800' %>">
+                  <%= trainer.status %>
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <a href="/uploads/<%= trainer.cv %>" target="_blank" class="text-blue-600 hover:text-blue-900">View CV</a>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <% if (trainer.status === 'pending') { %>
+                  <form action="/admin/trainers/<%= trainer._id %>/approve" method="POST" class="inline">
+                    <button type="submit" class="text-green-600 hover:text-green-900 mr-3">Approve</button>
+                  </form>
+                  <form action="/admin/trainers/<%= trainer._id %>/reject" method="POST" class="inline">
+                    <button type="submit" class="text-red-600 hover:text-red-900">Reject</button>
+                  </form>
+                <% } else if (trainer.status === 'approved') { %>
+                  <form action="/admin/trainers/<%= trainer._id %>/remove" method="POST" class="inline">
+                    <button type="submit" class="text-red-600 hover:text-red-900">Remove</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
